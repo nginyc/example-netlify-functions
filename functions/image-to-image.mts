@@ -20,7 +20,6 @@ export default async (request: Request, context: Context) => {
     },
     body: formData
   });
-  console.error(resp);
 
   return new Response(resp.body);
 }
