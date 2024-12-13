@@ -1,19 +1,17 @@
 import { Context } from '@netlify/functions'
 import { fail } from 'assert'
 
-const API_KEY = Netlify.env.get('DREAMSTUDIO_API_KEY') ?? fail('Environment variable DREAMSTUDIO_API_KEY is required');
-const ENDPOINT_URL = Netlify.env.get('DREAMSTUDIO_ENDPOINT') ?? fail('Environment variable DREAMSTUDIO_ENDPOINT is required');
+const API_KEY = Netlify.env.get('STABILITY_API_KEY') ?? fail('Environment variable STABILITY_API_KEY is required');
+const ENDPOINT_URL = Netlify.env.get('STABILITY_TEXT_TO_IMAGE_ENDPOINT') ?? fail('Environment variable STABILITY_TEXT_TO_IMAGE_ENDPOINT is required');
 
 export default async (request: Request, context: Context) => {
-  const searchParams = new URL(request.url).searchParams;
-  const description = searchParams.get('description');
-  const prompt = `Photograph of ${description}`;
+  const { description } = await request.json();
 
   const response = await fetch(ENDPOINT_URL, {
     method: 'POST',
     headers: {
       "Content-Type": 'application/json; charset=utf-8',
-      "Accept": 'application/json',
+      "Accept": 'image/png',
       "Authorization": API_KEY,
     },
     body: JSON.stringify({
@@ -25,23 +23,14 @@ export default async (request: Request, context: Context) => {
       steps: 60,
       text_prompts: [
         {
-          text: prompt,
+          text: description,
           weight: 1
         }
       ],
     })
   });
 
-  const data = await response.json();
-  const image = data.artifacts[0].base64;
-  return new Response(
-    image,
-    {
-      headers: {
-        'Content-Type': 'image/jpeg'
-      }
-    }
-  );
+  return new Response(response.body);
 }
 
 

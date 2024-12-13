@@ -35,13 +35,17 @@ Run:
 netlify functions:serve
 ```
 
-To test the function, hit the locally-deployed function endpoint by running:
+To test the functions, hit the locally-deployed function endpoint by running:
 
 ```sh
-curl "http://localhost:9999/.netlify/functions/text-to-image?description=donald+biden" | base64 -d > donald.jpeg
+curl -H "Content-Type: application/json" -d "{\"description\": \"wabi sabi bedroom\"}" -X POST "http://localhost:9999/.netlify/functions/text-to-image" > images/room-wabi-sabi.png
 ```
 
-Then check out the generated image `donald.jpeg`.
+```sh
+echo "{\"description\": \"wabi sabi bedroom\", \"image\": \"$(cat images/room.png | base64)\"}" | curl -H "Content-Type: application/json" -d @- -X POST "http://localhost:9999/.netlify/functions/image-to-image" > images/room-wabi-sabi-reimagined.png
+```
+
+Then check out the generated images in the `images/` folder.
 
 
 ## Deployment
@@ -49,12 +53,3 @@ Then check out the generated image `donald.jpeg`.
 Deploy this project on your Netlify account. 
 
 While deploying, you will need to provide all the environment variables that correspond that in `.env.template`.
-
-After deploying, you can hit the function endpoint deployed on Netlify by running:
-
-
-```sh
-curl "https://<your Netlify project site URL>/.netlify/functions/text-to-image?description=joe+trump" | base64 -d > joe.jpeg
-```
-
-Then check out the generated image `joe.jpeg`.

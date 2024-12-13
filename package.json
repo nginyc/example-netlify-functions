@@ -2,11 +2,12 @@
     "name": "example-netlify-functions",
     "version": "0.1.0",
     "scripts": {
-        "dev": "netlify dev"
+        "dev": "netlify functions:serve"
     },
     "author": "nginyc",
     "license": "ISC",
     "dependencies": {
+        "@fastify/busboy": "^3.1.0",
         "@netlify/functions": "^2.8.2",
         "@types/node": "^22.10.1",
         "typescript": "^4.9.5"
