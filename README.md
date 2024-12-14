@@ -1,8 +1,8 @@
 # Example - Netlify Functions
 
-This is [@nginyc](git@github.com:nginyc/example-netlify-functions.git)'s example of how to create a Netlify function.
+This is [@nginyc](git@github.com:nginyc/example-netlify-functions.git)'s example of how to create Netlify functions.
 
-The example function hits [Stability AI's "text-to-image" API](https://platform.stability.ai/docs/api-reference#tag/SDXL-1.0-and-SD1.6/operation/textToImage) to generate an image given a description.
+The example functions hit [Stability AI's "text-to-image" and "image-to-image" APIs](https://platform.stability.ai/docs/api-reference) to generate images.
 
 ## Setup
 
@@ -35,7 +35,7 @@ Run:
 netlify functions:serve
 ```
 
-To test the functions, hit the locally-deployed function endpoint by running:
+To test the functions, hit the locally-deployed function endpoints by running:
 
 ```sh
 curl -H "Content-Type: application/json" -d "{\"description\": \"wabi sabi bedroom\"}" -X POST "http://localhost:9999/.netlify/functions/text-to-image" > images/room-wabi-sabi.png
