@@ -15,12 +15,6 @@ export default async (request: Request, context: Context) => {
       "Authorization": API_KEY,
     },
     body: JSON.stringify({
-      cfg_scale: 6,
-      clip_guidance_preset: 'FAST_BLUE',
-      height: 512,
-      width: 512,
-      samples: 1,
-      steps: 60,
       text_prompts: [
         {
           text: description,
